@@ -1,24 +1,64 @@
-import logo from './logo.svg';
 import './App.css';
+// import About from './components/About';
+import Navbar from './components/Navbar';
+import Textform from './components/Textform';
+import { useState } from 'react';
+// import About from './components/About';
+import Alert from './components/Alert';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
 
 function App() {
+  const [mode, setmode] = useState('light')
+  const [alert, setalert] = useState(null)
+
+  const showalert = (message, type)=>{
+    setalert({
+      msg: message,
+      type: type
+    })
+    setTimeout(()=>{
+      setalert(null);
+    },1500)
+  }
+  const togglemode = ()=>{
+    if(mode === 'light'){
+      setmode('dark')
+      document.body.style.backgroundColor='#042743'
+      showalert("Dark mode has been enabled!","success")
+    }else{
+      setmode('light')
+      document.body.style.backgroundColor='white'
+      showalert("Light mode has been enabled!","success")
+
+    }
+  }
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {/* <Router> */}
+   <Navbar title="hello" mode={mode } togglemode={togglemode}/>
+   <Alert alert= {alert}/>
+   {/* yaha pr {alert} use satae wala variable h */}
+   <div className="container my-3">
+   {/* <Switch>
+          <Route exact path="/about">
+            <About />
+          </Route>*/}
+          {/* <Route exact path="/"> */}
+          <Textform heading="Enter text to analyze below" mode={mode }/>
+          {/* </Route> */}
+        {/* </Switch>  */}
+      {/* <About/> */}
+   </div>
+   {/* </Router> */}
+</>
   );
 }
 
